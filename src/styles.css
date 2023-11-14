@@ -1,4 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("app/ui/colors.css");
+
+@font-face {
+    font-family: Jura;
+    src: url("fonts/Jura/Jura-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: Amiko;
+    src: url("fonts/Amiko/Amiko-Regular.ttf");
+}
+
+@font-face {
+    font-family: Alata;
+    src: url("fonts/Alata/Alata-Regular.ttf");
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

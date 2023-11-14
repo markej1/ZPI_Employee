@@ -1,3 +1,7 @@
 :root{
     --primary-color: #b96204;
+    --background-color: #ede5e2;
+    --main-window-color: #ffffff;
+    --input-border-color: #949180;
+    --input-focused-color: #a87914;
 }
