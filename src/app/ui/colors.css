@@ -1,11 +1,3 @@
 :root{
-    --primary-color: #8b0000;
-    --accent-color: #5b0000;
-    --background-color: #ede5e2;
-    --main-window-color: #ffffff;
-    --footer-color: #f4f1f1;
-    --slide-track-button-color: #a88836;
-    --slide-track-activated-color: #835e06;
-    --slide-track-hover-button-color: var(--slide-track-activated-color);
-    --slide-track-color: #d7caca;
+    --primary-color: #b96204;
 }
