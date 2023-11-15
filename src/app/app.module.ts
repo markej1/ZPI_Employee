@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { MarginComponent } from './components/margin/margin.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     ],
     imports: [
         BrowserModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     providers: [],
     bootstrap: [AppComponent]

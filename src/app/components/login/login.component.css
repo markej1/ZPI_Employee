@@ -56,6 +56,26 @@ input {
     transition: 0.5s;
     outline: none;
     font-family: Jura, serif;
+    font-weight: bold;
+}
+
+button {
+    margin: auto;
+    position: absolute;
+    bottom: 8%;
+    right: 4%;
+    font-family: Jura, serif;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+::ng-deep .mat-mdc-raised-button {
+    border-radius: 20px !important;
+}
+
+::ng-deep .mat-mdc-raised-button.mat-unthemed {
+    --mdc-protected-button-container-color: var(--primary-color);
+    --mdc-protected-button-label-text-color: white;
 }
 
 
