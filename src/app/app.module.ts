@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MarginComponent } from './components/margin/margin.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatButtonModule} from "@angular/material/button";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {MatButtonModule} from "@angular/material/button";
     imports: [
         BrowserModule,
         MatSlideToggleModule,
-        MatButtonModule
+        MatButtonModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

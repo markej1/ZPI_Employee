@@ -9,18 +9,36 @@
         </section>
 
         <form>
-            <section class="grid_options_item" id="level_choice">
+            <section>
                 <h2>Login</h2>
-                <input>
-            </section>
-
-            <section class="grid_options_item" id="degree_choice">
-                <h2>Hasło</h2>
-                <input>
+                <input
+                    class="text_input"
+                    id="login_input"
+                    type="email"
+                >
             </section>
         </form>
 
-        <button mat-raised-button>Zaloguj się</button>
+        <section>
+            <h2>Hasło</h2>
+            <section id="pwd">
+                <input
+                    class="text_input"
+                    id="password_input"
+                    [type]="passwordHidden?'password':'text'"
+                    [(ngModel)]="password"
+                >
+                <input
+                    class="eye_icon"
+                    type="image"
+                    [src]="passwordHidden?'../../../assets/icon_hidden.png':'../../../assets/icon_show.png'"
+                    alt="Eye"
+                    (click)="changeVisibility()"
+                >
+            </section>
+        </section>
+
+        <button id="accept_button" mat-raised-button>Zaloguj się</button>
 
     </section>
 

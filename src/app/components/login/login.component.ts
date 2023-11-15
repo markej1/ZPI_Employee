@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+    password?: string;
+
+    passwordHidden: boolean = true;
+
+    changeVisibility() {
+        this.passwordHidden = !this.passwordHidden;
+    }
+
 }

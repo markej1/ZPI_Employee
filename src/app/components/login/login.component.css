@@ -40,18 +40,18 @@ h2 {
     font-size: 1.2em;
 }
 
-input:focus {
+.text_input:focus {
     border: 2px solid var(--input-focused-color);
 }
 
-input {
+.text_input {
     position: relative;
     display: block;
     margin: 0 auto;
     border: 2px solid var(--input-border-color);
     border-radius: 8px;
-    padding: 5px 1%;
-    width: 30%;
+    padding: 5px 50px 5px 1%;
+    width: 20em;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
@@ -59,7 +59,25 @@ input {
     font-weight: bold;
 }
 
-button {
+.eye_icon {
+    width: 24px;
+    position: relative;
+    left: -35px;
+    top: 8px;
+}
+
+#password_input, .eye_icon {
+    display: inline-block;
+}
+
+#pwd {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    padding-left: 24px;
+}
+
+#accept_button {
     margin: auto;
     position: absolute;
     bottom: 8%;
