@@ -15,6 +15,7 @@
                     class="text_input"
                     id="login_input"
                     type="email"
+                    [(ngModel)]="login"
                 >
             </section>
         </form>
@@ -38,7 +39,13 @@
             </section>
         </section>
 
-        <button id="accept_button" mat-raised-button>Zaloguj się</button>
+        <button
+            id="accept_button"
+            mat-raised-button
+            (click)="checkData()"
+        >
+            Zaloguj się
+        </button>
 
     </section>
 
