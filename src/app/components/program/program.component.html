@@ -5,27 +5,47 @@
     <section class="section_add">
 
         <section class="grid_add">
-            <section id="add_1">
-                <p>Dodaj 1</p>
-            </section>
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj efekty uczenia się"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
         </section>
 
         <section class="grid_add">
-            <section id="add_2">
-                <p>Dodaj 2</p>
-            </section>
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj plan studiów"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
         </section>
 
         <section class="grid_add">
-            <section id="add_3">
-                <p>Dodaj 3</p>
-            </section>
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj opis programu studiów"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
         </section>
 
         <section class="grid_add">
-            <section id="add_4">
-                <p>Dodaj 4</p>
-            </section>
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj kary przedmiotów"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
         </section>
 
     </section>

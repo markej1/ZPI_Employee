@@ -10,6 +10,8 @@ import {FormsModule} from "@angular/forms";
 import {provideRouter, RouterModule} from "@angular/router";
 import routeConfig from "./routes";
 import { ProgramComponent } from './components/program/program.component';
+import {HttpClientModule} from "@angular/common/http";
+import {NgxFileDropModule} from "ngx-file-drop";
 
 @NgModule({
     declarations: [
@@ -23,7 +25,9 @@ import { ProgramComponent } from './components/program/program.component';
         MatSlideToggleModule,
         MatButtonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        HttpClientModule,
+        NgxFileDropModule
     ],
     providers: [
         provideProtractorTestingSupport(),

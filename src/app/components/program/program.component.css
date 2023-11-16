@@ -9,16 +9,19 @@ h1 {
 
 .section_add {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
     grid-template-rows: 270px 270px;
     margin: 3%;
 }
 
 .grid_add {
-    border: 1px dashed grey;
+    border: 1px grey dashed;
     border-radius: 30px;
     background-color: #ede5e2;
     margin: 3% 25% 10% 25%;
+    /*align-items: end;*/
+    /*justify-content: center;*/
+    word-wrap: break-word;
 }
 
 .grid_add:hover {

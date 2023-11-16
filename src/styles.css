@@ -24,3 +24,20 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
+
+.grid_file_drop {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.content_file_drop {
+    color: black;
+    font-family: Amiko, serif;
+    font-style: italic;
+    max-width: 25ch;
+    margin: auto;
+    position: relative;
+    top: 75%;
+    transform: translate(0, -75%);
+    /*padding: 30px;*/
+}
