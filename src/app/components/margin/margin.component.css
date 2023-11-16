@@ -1,0 +1,11 @@
+.top-menu {
+    background: var(--primary-color);
+    height: 7.5%;
+}
+
+#logo {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    height: 55px;
+}

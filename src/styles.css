@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("app/ui/colors.css");
+
+@font-face {
+    font-family: Jura;
+    src: url("fonts/Jura/Jura-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: Amiko;
+    src: url("fonts/Amiko/Amiko-Regular.ttf");
+}
+
+@font-face {
+    font-family: Alata;
+    src: url("fonts/Alata/Alata-Regular.ttf");
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.grid_file_drop {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.content_file_drop {
+    color: black;
+    font-family: Amiko, serif;
+    font-style: italic;
+    max-width: 25ch;
+    margin: auto;
+    position: relative;
+    top: 75%;
+    transform: translate(0, -75%);
+    /*padding: 30px;*/
+}

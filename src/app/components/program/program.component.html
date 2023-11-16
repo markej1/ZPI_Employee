@@ -1,0 +1,55 @@
+<section id="content">
+
+    <h1>Dodawanie pliku</h1>
+
+    <section class="section_add">
+
+        <section class="grid_add">
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj efekty uczenia się"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
+        </section>
+
+        <section class="grid_add">
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj plan studiów"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
+        </section>
+
+        <section class="grid_add">
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj opis programu studiów"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
+        </section>
+
+        <section class="grid_add">
+            <ngx-file-drop
+                dropZoneClassName="grid_file_drop"
+                contentClassName="content_file_drop"
+                dropZoneLabel="Dodaj kary przedmiotów"
+                (onFileDrop)="dropFile($event)"
+                accept=".pdf"
+            >
+            </ngx-file-drop>
+        </section>
+
+    </section>
+
+    <button id="button_ok" mat-raised-button>Zatwierdź</button>
+
+</section>
