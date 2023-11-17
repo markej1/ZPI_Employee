@@ -1,10 +1,12 @@
+<app-margin></app-margin>
+
 <section id="content">
 
     <h1>Dodawanie pliku</h1>
 
     <section class="section_add">
 
-        <section class="grid_add">
+        <button class="grid_add" (click)="openBrowser(0)">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
@@ -13,9 +15,9 @@
                 accept=".pdf"
             >
             </ngx-file-drop>
-        </section>
+        </button>
 
-        <section class="grid_add">
+        <button class="grid_add" (click)="openBrowser(1)">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
@@ -24,9 +26,9 @@
                 accept=".pdf"
             >
             </ngx-file-drop>
-        </section>
+        </button>
 
-        <section class="grid_add">
+        <button class="grid_add" (click)="openBrowser(2)">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
@@ -35,9 +37,9 @@
                 accept=".pdf"
             >
             </ngx-file-drop>
-        </section>
+        </button>
 
-        <section class="grid_add">
+        <button class="grid_add" (click)="openBrowser(3)">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
@@ -46,10 +48,17 @@
                 accept=".pdf"
             >
             </ngx-file-drop>
-        </section>
+        </button>
 
     </section>
+    <input id="input_file_0" type="file" (change)="chooseFile($event)">
+    <input id="input_file_1" type="file" (change)="chooseFile($event)">
+    <input id="input_file_2" type="file" (change)="chooseFile($event)">
+    <input id="input_file_3" type="file" (change)="chooseFile($event)">
 
     <button id="button_ok" mat-raised-button>Zatwierdź</button>
+
+
+    {{chosenFileName}}
 
 </section>
