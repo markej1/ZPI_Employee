@@ -10,8 +10,8 @@
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj efekty uczenia się"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="availableSections[0]?'Dodaj efekty uczenia się':filesNames[0]"
+                (onFileDrop)="dropFile($event, 0)"
                 accept=".pdf"
             >
             </ngx-file-drop>
@@ -21,8 +21,8 @@
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj plan studiów"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="availableSections[1]?'Dodaj plan studiów':filesNames[1]"
+                (onFileDrop)="dropFile($event, 1)"
                 accept=".pdf"
             >
             </ngx-file-drop>
@@ -32,8 +32,8 @@
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj opis programu studiów"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="availableSections[2]?'Dodaj opis programu studiów':filesNames[2]"
+                (onFileDrop)="dropFile($event, 2)"
                 accept=".pdf"
             >
             </ngx-file-drop>
@@ -43,22 +43,19 @@
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj kary przedmiotów"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="availableSections[3]?'Dodaj karty przedmiotów':filesNames[3]"
+                (onFileDrop)="dropFile($event, 3)"
                 accept=".pdf"
             >
             </ngx-file-drop>
         </button>
 
     </section>
-    <input id="input_file_0" type="file" (change)="chooseFile($event)">
-    <input id="input_file_1" type="file" (change)="chooseFile($event)">
-    <input id="input_file_2" type="file" (change)="chooseFile($event)">
-    <input id="input_file_3" type="file" (change)="chooseFile($event)">
+    <input id="input_file" type="file" (change)="chooseFile($event)">
 
     <button id="button_ok" mat-raised-button>Zatwierdź</button>
 
 
-    {{chosenFileName}}
+    {{filesNames[2]}}
 
 </section>
