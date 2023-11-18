@@ -8,36 +8,33 @@ import {NgxFileDropEntry} from "ngx-file-drop";
 })
 export class ProgramComponent {
 
-    actualHTMLIndex: number = 0;
-    actualIndex: number = 0;
-
     files: NgxFileDropEntry[] = [];
 
     chosenFile: File | null = null;
 
-    availableSections: boolean[] = [];
-    actualSection?: number;
+    disabledSections: string[];
+    actualSection?: string;
 
-    filesNames: string[] = [];
+    filesNames: {[key: string]: string};
 
     constructor() {
-        this.availableSections = Array(4).fill(true);
-        this.filesNames = Array(4).fill("");
+        this.disabledSections = [];
+        this.filesNames = {};
     }
 
-    dropFile(files: NgxFileDropEntry[], index: number) {
+    dropFile(files: NgxFileDropEntry[], id: string) {
         console.log(files[0].relativePath);
-        if (this.availableSections[index]) {
-            this.availableSections[index] = false;
-            this.filesNames[index] = files[0].relativePath;
+        if (!this.disabledSections.includes(id)) {
+            this.disabledSections.push(id);
+            this.filesNames[id] = files[0].relativePath;
         }
     }
 
-    openBrowser(index: number) {
-        if (this.availableSections[index]) {
+    openBrowser(id: string) {
+        if (!this.disabledSections.includes(id)) {
             const file = document.getElementById('input_file')!;
             file.click();
-            this.actualSection = index;
+            this.actualSection = id;
         }
     }
 
@@ -45,7 +42,7 @@ export class ProgramComponent {
         this.chosenFile = event.target.files[0];
         if (this.chosenFile) {
             this.filesNames[this.actualSection!] = this.chosenFile.name;
-            this.availableSections[this.actualSection!] = false;
+            this.disabledSections.push(this.actualSection!);
         }
     }
 
