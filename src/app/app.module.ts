@@ -12,13 +12,16 @@ import routeConfig from "./routes";
 import { ProgramComponent } from './components/program/program.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NgxFileDropModule} from "ngx-file-drop";
+import { AnswerComponent } from './components/answer/answer.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
         MarginComponent,
-        ProgramComponent
+        ProgramComponent,
+        AnswerComponent
     ],
     imports: [
         BrowserModule,
@@ -27,7 +30,8 @@ import {NgxFileDropModule} from "ngx-file-drop";
         FormsModule,
         RouterModule,
         HttpClientModule,
-        NgxFileDropModule
+        NgxFileDropModule,
+        MatDialogModule
     ],
     providers: [
         provideProtractorTestingSupport(),

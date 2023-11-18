@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {NgxFileDropEntry} from "ngx-file-drop";
+import {AnswerComponent} from "../answer/answer.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-program',
@@ -17,7 +19,7 @@ export class ProgramComponent {
 
     filesNames: {[key: string]: string};
 
-    constructor() {
+    constructor(private dialog: MatDialog) {
         this.disabledSections = [];
         this.filesNames = {};
     }
@@ -48,6 +50,10 @@ export class ProgramComponent {
 
     cancel() {
         window.location.reload();
+    }
+
+    approve() {
+        this.dialog.open(AnswerComponent);
     }
 
 }
