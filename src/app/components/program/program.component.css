@@ -29,15 +29,19 @@ input[type="file"] {
     visibility: hidden;
 }
 
-#button_ok {
+.section_button_decisions {
     margin: auto;
     position: absolute;
     bottom: 8%;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+.button_decision {
     font-family: Jura, serif;
     font-weight: bold;
     font-size: 1em;
+    margin-inline: 20px;
 }
 
 ::ng-deep .mat-mdc-raised-button {

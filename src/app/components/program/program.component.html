@@ -53,7 +53,10 @@
     </section>
     <input id="input_file" type="file" (change)="chooseFile($event)">
 
-    <button id="button_ok" mat-raised-button>Zatwierdź</button>
+    <section class="section_button_decisions">
+        <button class="button_decision" mat-raised-button (click)="cancel()">Anuluj</button>
+        <button class="button_decision" mat-raised-button>Zatwierdź</button>
+    </section>
 
 
     {{filesNames[2]}}

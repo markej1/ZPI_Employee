@@ -8,6 +8,9 @@ import {NgxFileDropEntry} from "ngx-file-drop";
 })
 export class ProgramComponent {
 
+    actualHTMLIndex: number = 0;
+    actualIndex: number = 0;
+
     files: NgxFileDropEntry[] = [];
 
     chosenFile: File | null = null;
@@ -44,6 +47,10 @@ export class ProgramComponent {
             this.filesNames[this.actualSection!] = this.chosenFile.name;
             this.availableSections[this.actualSection!] = false;
         }
+    }
+
+    cancel() {
+        window.location.reload();
     }
 
 }
