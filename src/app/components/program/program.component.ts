@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {NgxFileDropEntry} from "ngx-file-drop";
+import {AnswerComponent} from "../answer/answer.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-program',
@@ -11,33 +13,47 @@ export class ProgramComponent {
     files: NgxFileDropEntry[] = [];
 
     chosenFile: File | null = null;
-    chosenFileName?: string;
 
-    availableSections: boolean[] = [];
-    actualSection?: number;
+    disabledSections: string[];
+    actualSection?: string;
 
-    constructor() {
-        this.availableSections = Array(4).fill(true);
+    filesNames: {[key: string]: string};
+
+    constructor(private dialog: MatDialog) {
+        this.disabledSections = [];
+        this.filesNames = {};
     }
 
-    dropFile(files: NgxFileDropEntry[]) {
-        console.log(files);
+    dropFile(files: NgxFileDropEntry[], id: string) {
+        console.log(files[0].relativePath);
+        if (!this.disabledSections.includes(id)) {
+            this.disabledSections.push(id);
+            this.filesNames[id] = files[0].relativePath;
+        }
     }
 
-    openBrowser(index: number) {
-        if (this.availableSections[index]) {
-            const file = document.getElementById('input_file_' + index)!;
+    openBrowser(id: string) {
+        if (!this.disabledSections.includes(id)) {
+            const file = document.getElementById('input_file')!;
             file.click();
-            this.actualSection = index;
+            this.actualSection = id;
         }
     }
 
     chooseFile(event: any) {
         this.chosenFile = event.target.files[0];
         if (this.chosenFile) {
-            this.chosenFileName = this.chosenFile.name;
-            this.availableSections[this.actualSection!] = false;
+            this.filesNames[this.actualSection!] = this.chosenFile.name;
+            this.disabledSections.push(this.actualSection!);
         }
+    }
+
+    cancel() {
+        window.location.reload();
+    }
+
+    approve() {
+        this.dialog.open(AnswerComponent);
     }
 
 }

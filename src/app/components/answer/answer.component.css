@@ -1,0 +1,10 @@
+.answer_content {
+    padding: 30px;
+}
+
+#answer_img {
+    width: 48px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

@@ -6,59 +6,56 @@
 
     <section class="section_add">
 
-        <button class="grid_add" (click)="openBrowser(0)">
+        <button class="grid_add" (click)="openBrowser('effects')">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj efekty uczenia się"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="!disabledSections.includes('effects')?'Dodaj efekty uczenia się':filesNames['effects']"
+                (onFileDrop)="dropFile($event, 'effects')"
                 accept=".pdf"
             >
             </ngx-file-drop>
         </button>
 
-        <button class="grid_add" (click)="openBrowser(1)">
+        <button class="grid_add" (click)="openBrowser('plan')">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj plan studiów"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="!disabledSections.includes('plan')?'Dodaj plan studiów':filesNames['plan']"
+                (onFileDrop)="dropFile($event, 'plan')"
                 accept=".pdf"
             >
             </ngx-file-drop>
         </button>
 
-        <button class="grid_add" (click)="openBrowser(2)">
+        <button class="grid_add" (click)="openBrowser('program')">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj opis programu studiów"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="!disabledSections.includes('program')?'Dodaj opis programu studiów':filesNames['program']"
+                (onFileDrop)="dropFile($event, 'program')"
                 accept=".pdf"
             >
             </ngx-file-drop>
         </button>
 
-        <button class="grid_add" (click)="openBrowser(3)">
+        <button class="grid_add" (click)="openBrowser('subject')">
             <ngx-file-drop
                 dropZoneClassName="grid_file_drop"
                 contentClassName="content_file_drop"
-                dropZoneLabel="Dodaj kary przedmiotów"
-                (onFileDrop)="dropFile($event)"
+                [dropZoneLabel]="!disabledSections.includes('subject')?'Dodaj karty przedmiotów':filesNames['subject']"
+                (onFileDrop)="dropFile($event, 'subject')"
                 accept=".pdf"
             >
             </ngx-file-drop>
         </button>
 
     </section>
-    <input id="input_file_0" type="file" (change)="chooseFile($event)">
-    <input id="input_file_1" type="file" (change)="chooseFile($event)">
-    <input id="input_file_2" type="file" (change)="chooseFile($event)">
-    <input id="input_file_3" type="file" (change)="chooseFile($event)">
+    <input id="input_file" type="file" (change)="chooseFile($event)">
 
-    <button id="button_ok" mat-raised-button>Zatwierdź</button>
-
-
-    {{chosenFileName}}
+    <section class="section_button_decisions">
+        <button class="button_decision" mat-raised-button (click)="cancel()">Anuluj</button>
+        <button class="button_decision" mat-raised-button (click)="approve()">Zatwierdź</button>
+    </section>
 
 </section>
