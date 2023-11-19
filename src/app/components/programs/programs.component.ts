@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteProgramComponent} from "../delete-program/delete-program.component";
 export interface PeriodicElement {
     number: number;
     year: string;
@@ -26,4 +28,22 @@ export class ProgramsComponent {
     displayedColumns: string[] = ['number', 'year', 'fieldOfStudy', 'degree', 'remove'];
     dataSource = ELEMENT_DATA;
     dataLength = this.dataSource.length
+
+    constructor(public dialog: MatDialog) {
+    }
+
+
+    deleteProgram(row: any) {
+        this.openDialog();
+
+        const index = this.dataSource.indexOf(row);
+        if (index !== -1) {
+            this.dataSource.splice(index, 1);
+        }
+    }
+
+    openDialog() {
+        this.dialog.open(DeleteProgramComponent);
+    }
+
 }

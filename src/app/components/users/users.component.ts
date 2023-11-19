@@ -1,7 +1,5 @@
-import {SelectionModel} from '@angular/cdk/collections';
 import {Component} from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+
 export interface PeriodicElement {
     number: number;
     email: string;
@@ -27,6 +25,4 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class UsersComponent {
     displayedColumns: string[] = ['number', 'email', 'reset', 'remove'];
     dataSource = ELEMENT_DATA;
-    defaultInputText = "Wprowadz email"
-
 }

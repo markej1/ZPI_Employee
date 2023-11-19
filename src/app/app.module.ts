@@ -20,6 +20,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatIconModule} from "@angular/material/icon";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ProgramsComponent } from './components/programs/programs.component';
+import { DeleteProgramComponent } from './components/delete-program/delete-program.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MarginComponent,
         ProgramComponent,
         AnswerComponent,
-        UsersComponent
+        UsersComponent,
+        ProgramsComponent,
+        DeleteProgramComponent
     ],
     imports: [
         BrowserModule,
