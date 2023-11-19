@@ -1,0 +1,12 @@
+h1 {
+    padding-top: 1%;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    font-family: Jura, serif;
+}
+
+.table {
+    height: 50%;
+    overflow-y: scroll;
+}
