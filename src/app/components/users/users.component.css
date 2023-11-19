@@ -1,0 +1,57 @@
+h1 {
+    padding-top: 1%;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    font-family: Jura, serif;
+}
+
+.text_input:focus {
+    border: 2px solid var(--input-focused-color);
+}
+
+.text_input {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid var(--input-border-color);
+    border-radius: 8px;
+    padding: 5px 50px 5px 1%;
+    width: 20em;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+    font-family: Jura, serif;
+    font-weight: bold;
+}
+
+.add-button {
+    background-color: #a87914;
+}
+
+.reset-button {
+    background-color: blue;
+}
+
+.delete-button {
+    background-color: red;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+
+section {
+    display: inline-flex;
+    margin-bottom: 15px;
+}
+
+.add-button {
+   margin-left: 10px;
+}
+
+.table {
+    height: 50%;
+    overflow-y: scroll;
+}

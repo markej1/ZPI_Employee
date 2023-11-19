@@ -14,6 +14,12 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgxFileDropModule} from "ngx-file-drop";
 import { AnswerComponent } from './components/answer/answer.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { UsersComponent } from './components/users/users.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatIconModule} from "@angular/material/icon";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -21,7 +27,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         LoginComponent,
         MarginComponent,
         ProgramComponent,
-        AnswerComponent
+        AnswerComponent,
+        UsersComponent
     ],
     imports: [
         BrowserModule,
@@ -31,7 +38,12 @@ import {MatDialogModule} from "@angular/material/dialog";
         RouterModule,
         HttpClientModule,
         NgxFileDropModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatCheckboxModule
     ],
     providers: [
         provideProtractorTestingSupport(),
