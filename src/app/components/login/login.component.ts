@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/http/auth.service";
+import {UserData} from "../../model/user-data";
+import {Token} from "../../model/token";
 
 @Component({
     selector: 'app-login',
@@ -13,7 +16,10 @@ export class LoginComponent {
 
     passwordHidden: boolean = true;
 
-    constructor(private router: Router) {
+    userData?: UserData;
+    token?: Token;
+
+    constructor(private router: Router, private authService: AuthService) {
     }
 
     changeVisibility() {
@@ -21,8 +27,19 @@ export class LoginComponent {
     }
 
     checkData() {
-        this.router.navigateByUrl("/program")
-
+        if (this.login != null && this.password != null) {
+            this.userData = {
+                login: this.login,
+                password: this.password
+            };
+            this.authService.signIn(this.userData).subscribe(
+                tokenGiven => this.token = {
+                    user_id: tokenGiven.user_id,
+                    token: tokenGiven.token
+                }
+            );
+        }
+        // this.router.navigateByUrl("/program");
     }
 
 }
