@@ -16,6 +16,7 @@
                 name="login"
                 type="email"
                 [(ngModel)]="login"
+                (keyup.enter)="checkData()"
             >
         </section>
 
@@ -28,6 +29,7 @@
                     name="password"
                     [type]="passwordHidden?'password':'text'"
                     [(ngModel)]="password"
+                    (keyup.enter)="checkData()"
                 >
                 <input
                     class="eye_icon"
