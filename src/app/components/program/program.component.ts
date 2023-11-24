@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {NgxFileDropEntry} from "ngx-file-drop";
 import {AnswerComponent} from "../answer/answer.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -9,7 +9,7 @@ import {CookiesService} from "../../services/cookies.service";
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.css']
 })
-export class ProgramComponent {
+export class ProgramComponent implements OnDestroy{
 
     files: NgxFileDropEntry[] = [];
 
@@ -28,6 +28,11 @@ export class ProgramComponent {
         this.filesNames = {};
         this.email = cookiesService.getCookie("email");
         this.idToken = cookiesService.getCookie("idToken");
+    }
+
+    ngOnDestroy() {
+        this.cookiesService.removeCookie("email");
+        this.cookiesService.removeCookie("idToken");
     }
 
     dropFile(files: NgxFileDropEntry[], id: string) {

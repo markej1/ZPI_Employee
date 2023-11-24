@@ -1,5 +1,5 @@
 <header class="top-menu">
-    <button id="logout_button" (click)="logout()">
+    <button id="logout_button" *ngIf="isLogged" (click)="logout()">
         Wyloguj się
         <img id="logout_img" src="../../../assets/logout.png" alt="logout">
     </button>
