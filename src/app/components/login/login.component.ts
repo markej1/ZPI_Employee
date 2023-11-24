@@ -19,6 +19,7 @@ export class LoginComponent {
 
     userData?: UserData;
     token?: Token;
+    errorMessage?: string;
 
     constructor(private router: Router, private authService: AuthService, private cookiesService: CookiesService) {
     }
@@ -33,20 +34,20 @@ export class LoginComponent {
                 email: this.login,
                 password: this.password
             };
-            console.log(this.userData);
-            this.authService.signIn(this.userData).subscribe(
-                tokenGiven => {
+            this.authService.signIn(this.userData).subscribe({
+                next: tokenGiven => {
                     this.token = {
                         email: tokenGiven.email,
                         idToken: tokenGiven.idToken
                     };
-                    console.log(tokenGiven);
-                    console.log("TOKEN: " + tokenGiven.email + " ; " + tokenGiven.idToken);
                     this.cookiesService.setCookie("email", this.token.email);
                     this.cookiesService.setCookie("idToken", this.token.idToken);
                     this.router.navigateByUrl("/program");
+                },
+                error: err => {
+                    this.errorMessage = err.message;
                 }
-            );
+            });
         }
     }
 

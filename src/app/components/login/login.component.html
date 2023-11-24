@@ -8,18 +8,16 @@
             <h1>Logowanie</h1>
         </section>
 
-        <form>
-            <section>
-                <h2>Login</h2>
-                <input
-                    class="text_input"
-                    id="login_input"
-                    name="login"
-                    type="email"
-                    [(ngModel)]="login"
-                >
-            </section>
-        </form>
+        <section>
+            <h2>Login</h2>
+            <input
+                class="text_input"
+                id="login_input"
+                name="login"
+                type="email"
+                [(ngModel)]="login"
+            >
+        </section>
 
         <section>
             <h2>Hasło</h2>
@@ -40,6 +38,8 @@
                 >
             </section>
         </section>
+
+        <p id="error_message">{{errorMessage}}</p>
 
         <button
             id="accept_button"
