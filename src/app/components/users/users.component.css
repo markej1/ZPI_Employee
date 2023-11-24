@@ -26,15 +26,15 @@ h1 {
 }
 
 .add-button {
-    background-color: #a87914;
+    background-color: var(--primary-color);
 }
 
 .reset-button {
-    background-color: blue;
+    background-color: #6b6be8;
 }
 
 .delete-button {
-    background-color: red;
+    background-color: var(--delete-color);
 }
 
 form {
@@ -54,4 +54,8 @@ section {
 .table {
     height: 50%;
     overflow-y: scroll;
+}
+
+tr.mat-mdc-header-row {
+    font-weight: bold;
 }

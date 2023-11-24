@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {importProvidersFrom, NgModule} from '@angular/core';
 import {BrowserModule, provideProtractorTestingSupport} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -22,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ProgramsComponent } from './components/programs/programs.component';
 import { DeleteProgramComponent } from './components/delete-program/delete-program.component';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
     declarations: [
@@ -32,7 +34,8 @@ import { DeleteProgramComponent } from './components/delete-program/delete-progr
         AnswerComponent,
         UsersComponent,
         ProgramsComponent,
-        DeleteProgramComponent
+        DeleteProgramComponent,
+        DeleteUserComponent
     ],
     imports: [
         BrowserModule,
@@ -47,11 +50,13 @@ import { DeleteProgramComponent } from './components/delete-program/delete-progr
         MatPaginatorModule,
         MatIconModule,
         BrowserAnimationsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatProgressSpinnerModule
     ],
     providers: [
         provideProtractorTestingSupport(),
-        provideRouter(routeConfig)
+        provideRouter(routeConfig),
+        importProvidersFrom(HttpClientModule)
     ],
     bootstrap: [AppComponent]
 })

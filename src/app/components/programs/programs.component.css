@@ -10,3 +10,11 @@ h1 {
     height: 50%;
     overflow-y: scroll;
 }
+
+tr.mat-mdc-header-row {
+    font-weight: bold;
+}
+
+button {
+    background-color: var(--delete-color);
+}

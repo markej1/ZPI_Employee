@@ -1,4 +1,10 @@
 <header class="top-menu">
+    <button id="programs_button" [routerLink]="['/programs']">
+        Programy
+    </button>
+    <button id="accounts_button" [routerLink]="['/users']">
+        Konta
+    </button>
     <button id="logout_button" (click)="logout()">
         Wyloguj się
         <img id="logout_img" src="../../../assets/logout.png" alt="logout">

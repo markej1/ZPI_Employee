@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-delete-program',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./delete-program.component.css']
 })
 export class DeleteProgramComponent {
+    constructor(
+        public dialogRef: MatDialogRef<DeleteProgramComponent>,
+    ) {}
 
+    deleteProgram() {
+        this.dialogRef.close(true);
+    }
 }
