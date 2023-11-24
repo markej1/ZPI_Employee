@@ -20,14 +20,12 @@ export class ProgramComponent implements OnDestroy{
 
     filesNames: {[key: string]: string};
 
-    email?: string;
-    idToken?: string;
+    isLogged: boolean = false;
 
     constructor(private dialog: MatDialog, private cookiesService: CookiesService) {
         this.disabledSections = [];
         this.filesNames = {};
-        this.email = cookiesService.getCookie("email");
-        this.idToken = cookiesService.getCookie("idToken");
+        this.isLogged = cookiesService.getCookie("email") !== "" && cookiesService.getCookie("idToken") !== "";
     }
 
     ngOnDestroy() {

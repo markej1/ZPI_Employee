@@ -1,6 +1,6 @@
-<app-margin></app-margin>
+<app-margin *ngIf="isLogged"></app-margin>
 
-<section id="content">
+<section id="content" *ngIf="isLogged">
 
     <h1>Dodawanie pliku</h1>
 
@@ -58,4 +58,9 @@
         <button class="button_decision" mat-raised-button (click)="approve()">Zatwierdź</button>
     </section>
 
+</section>
+
+
+<section id="not_logged" *ngIf="!isLogged">
+    <p id="not_logged_text">Zaloguj się, aby przejść do tej strony.</p>
 </section>

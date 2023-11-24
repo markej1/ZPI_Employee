@@ -52,3 +52,14 @@ input[type="file"] {
     --mdc-protected-button-container-color: var(--primary-color);
     --mdc-protected-button-label-text-color: white;
 }
+
+#not_logged {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#not_logged_text {
+    font-family: Amiko, serif;
+}
