@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../services/http/auth.service";
 import {UserData} from "../../model/user-data";
 import {Token} from "../../model/token";
+import {CookiesService} from "../../services/cookies.service";
 
 @Component({
     selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent {
     userData?: UserData;
     token?: Token;
 
-    constructor(private router: Router, private authService: AuthService) {
+    constructor(private router: Router, private authService: AuthService, private cookiesService: CookiesService) {
     }
 
     changeVisibility() {
@@ -29,17 +30,24 @@ export class LoginComponent {
     checkData() {
         if (this.login != null && this.password != null) {
             this.userData = {
-                login: this.login,
+                email: this.login,
                 password: this.password
             };
+            console.log(this.userData);
             this.authService.signIn(this.userData).subscribe(
-                tokenGiven => this.token = {
-                    user_id: tokenGiven.user_id,
-                    token: tokenGiven.token
+                tokenGiven => {
+                    this.token = {
+                        email: tokenGiven.email,
+                        idToken: tokenGiven.idToken
+                    };
+                    console.log(tokenGiven);
+                    console.log("TOKEN: " + tokenGiven.email + " ; " + tokenGiven.idToken);
+                    this.cookiesService.setCookie("email", this.token.email);
+                    this.cookiesService.setCookie("idToken", this.token.idToken);
+                    this.router.navigateByUrl("/program");
                 }
             );
         }
-        // this.router.navigateByUrl("/program");
     }
 
 }

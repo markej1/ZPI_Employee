@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {NgxFileDropEntry} from "ngx-file-drop";
 import {AnswerComponent} from "../answer/answer.component";
 import {MatDialog} from "@angular/material/dialog";
+import {CookiesService} from "../../services/cookies.service";
 
 @Component({
   selector: 'app-program',
@@ -19,9 +20,14 @@ export class ProgramComponent {
 
     filesNames: {[key: string]: string};
 
-    constructor(private dialog: MatDialog) {
+    email?: string;
+    idToken?: string;
+
+    constructor(private dialog: MatDialog, private cookiesService: CookiesService) {
         this.disabledSections = [];
         this.filesNames = {};
+        this.email = cookiesService.getCookie("email");
+        this.idToken = cookiesService.getCookie("idToken");
     }
 
     dropFile(files: NgxFileDropEntry[], id: string) {

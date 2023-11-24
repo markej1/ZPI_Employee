@@ -22,7 +22,7 @@ export class CookiesService {
 
     getCookie(key: string) {
         this.parseCookies();
-        if (this.cookieStore[key] == null) { return null; }
+        if (this.cookieStore[key] == null) { return ""; }
         else { return this.cookieStore[key]; }
     }
 
