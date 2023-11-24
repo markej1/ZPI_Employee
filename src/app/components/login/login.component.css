@@ -96,4 +96,9 @@ h2 {
     --mdc-protected-button-label-text-color: white;
 }
 
+#error_message {
+    color: var(--error-message-color);
+    text-align: center;
+    font-family: Amiko, serif;
+}
 

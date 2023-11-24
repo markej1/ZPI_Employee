@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthorizationService {
+export class CookiesService {
 
     private cookieStore: {[key: string]: string} = {};
 
@@ -22,7 +22,7 @@ export class AuthorizationService {
 
     getCookie(key: string) {
         this.parseCookies();
-        if (this.cookieStore[key] == null) { return null; }
+        if (this.cookieStore[key] == null) { return ""; }
         else { return this.cookieStore[key]; }
     }
 
