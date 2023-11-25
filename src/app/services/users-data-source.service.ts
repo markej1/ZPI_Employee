@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import {Account} from "../model/account";
 import {Observable, ReplaySubject} from "rxjs";
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AccountList} from "../model/account-list";
 
 @Injectable({
@@ -14,10 +14,9 @@ export class UsersDataSourceService extends DataSource<Account> {
         super();
     }
 
-    getUsers(page: number): Observable<AccountList> {
-        const href = 'https://susel.pythonanywhere.com/list-user';
-
-        return this._httpClient.get<AccountList>(href);
+    getUsers(page: number): Observable<string[]> {
+        const href = 'https://susel.pythonanywhere.com/list-user/';
+        return this._httpClient.get<string[]>(href);
     }
 
     connect(collectionViewer: CollectionViewer): Observable<Account[]> {

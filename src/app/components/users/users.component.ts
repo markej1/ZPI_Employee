@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {Account} from "../../model/account";
 import {ProgramsDataSourceService} from "../../services/programs-data-source.service";
 import {MatPaginator} from "@angular/material/paginator";
@@ -9,39 +9,48 @@ import {UsersDataSourceService} from "../../services/users-data-source.service";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, merge, startWith, switchMap} from "rxjs";
 import {AnswerComponent} from "../answer/answer.component";
-
-const ELEMENT_DATA: Account[] = [
-    {number: 1, email: 'abac@pwr.edu.pl'},
-    {number: 2, email: 'dddd@pwr.edu.pl'},
-    {number: 3, email: 'gfjddf@pwr.edu.pl'},
-    {number: 4, email: 'asdghk@pwr.edu.pl'},
-    {number: 2, email: 'abaasdc@pwr.edu.pl'},
-    {number: 3, email: 'sdasd@pwr.edu.pl'},
-    {number: 4, email: 'ab3r3tac@pwr.edu.pl'},
-];
+import {waitForAsync} from "@angular/core/testing";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent {
+export class UsersComponent implements AfterViewInit {
     displayedColumns: string[] = ['number', 'email', 'reset', 'remove'];
-    dataToDisplay = [...ELEMENT_DATA];
+    dataToDisplay: Account[] = [];
     dataSource = new UsersDataSourceService(this._httpClient);
-    dataLength = ELEMENT_DATA.length;
-    data: Account[] = [];
+    dataLength = this.dataToDisplay.length;
+    data: String[] = [];
+    isLoadingResults = true;
+    isRateLimitReached = false;
 
     newAccountEmail: string = '';
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit() {
-        this.dataSource.getUsers(1).subscribe(data =>
-            data.items = this.data,
-
-        );
-        console.log(this.data);
+        merge()
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    this.isLoadingResults = true;
+                    return this.dataSource!.getUsers(
+                        1,
+                    ).pipe();
+                }),
+                map(data => {
+                    this.isLoadingResults = false;
+                    this.isRateLimitReached = data === null;
+                    if (data === null) {
+                        return [];
+                    }
+                    // this.resultsLength = data.total_count;
+                    return data;
+                })
+            ).subscribe(data => {
+                this.data = data.map(email => (email !== null ? email : ''))
+            });
     }
 
     constructor(public dialog: MatDialog, private _httpClient: HttpClient) {
@@ -65,10 +74,12 @@ export class UsersComponent {
         if(domain === 'pwr.edu.pl') {
             this.dataToDisplay.push(
                 {
-                    number: 1,
+                    // number: 1,
                     email: email
                 });
             this.dataSource.setData(this.dataToDisplay);
+
+            this.dialog.open(AnswerComponent);
         } else {
             this.dialog.open(AnswerComponent);
         }
