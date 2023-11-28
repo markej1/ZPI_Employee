@@ -83,3 +83,21 @@ mat-spinner {
     align-items: center;
     justify-content: center;
 }
+
+.mat-column-number {
+    width: 10%;
+}
+
+.mat-column-email {
+    width: 60%;
+}
+
+.mat-column-reset {
+     width: 15%;
+ }
+
+.mat-column-delete {
+      width: 25%;
+  }
+
+

@@ -1,69 +1,50 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {Account} from "../../model/account";
-import {ProgramsDataSourceService} from "../../services/programs-data-source.service";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteProgramComponent} from "../delete-program/delete-program.component";
 import {DeleteUserComponent} from "../delete-user/delete-user.component";
 import {UsersDataSourceService} from "../../services/users-data-source.service";
 import {HttpClient} from "@angular/common/http";
-import {catchError, map, merge, startWith, switchMap} from "rxjs";
 import {AnswerComponent} from "../answer/answer.component";
-import {waitForAsync} from "@angular/core/testing";
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements AfterViewInit {
     displayedColumns: string[] = ['number', 'email', 'reset', 'remove'];
-    dataToDisplay: Account[] = [];
-    dataSource = new UsersDataSourceService(this._httpClient);
-    dataLength = this.dataToDisplay.length;
-    data: String[] = [];
-    isLoadingResults = true;
-    isRateLimitReached = false;
+    dataSource: UsersDataSourceService = new UsersDataSourceService(this._httpClient);
+    data: string[] = [];
+    isLoadingResults: boolean = true;
 
     newAccountEmail: string = '';
+    currentPage: number = 0;
+    dataLength: number = 0;
+    displayedUsers: number = 5;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit() {
-        merge()
-            .pipe(
-                startWith({}),
-                switchMap(() => {
-                    this.isLoadingResults = true;
-                    return this.dataSource!.getUsers(
-                        1,
-                    ).pipe();
-                }),
-                map(data => {
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = data === null;
-                    if (data === null) {
-                        return [];
-                    }
-                    // this.resultsLength = data.total_count;
-                    return data;
-                })
-            ).subscribe(data => {
-                this.data = data.map(email => (email !== null ? email : ''))
-            });
+        this.isLoadingResults = true;
+        this.dataSource.getUsers(3).subscribe(data => {
+            this.isLoadingResults = false;
+            this.data = data.map(email => (email !== null ? email : ''));
+            this.dataLength = this.data.length;
+            this.dataSource.setData(this.data);
+        });
     }
 
     constructor(public dialog: MatDialog, private _httpClient: HttpClient) {
-        this.dataSource.setData(this.dataToDisplay);
+        this.dataSource.setData(this.data);
     }
 
     deleteUser(row: number) {
         const dialogRef = this.dialog.open(DeleteUserComponent);
 
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                this.dataToDisplay.splice(row, 1);
-                this.dataSource.setData(this.dataToDisplay);
+            if(result) {
+                this.data.splice(row, 1);
+                this.dataSource.setData(this.data);
             }
         });
     }
@@ -72,16 +53,30 @@ export class UsersComponent implements AfterViewInit {
         const parts: string[] = email.split('@');
         const domain: string = parts[1];
         if(domain === 'pwr.edu.pl') {
-            this.dataToDisplay.push(
-                {
-                    // number: 1,
-                    email: email
-                });
-            this.dataSource.setData(this.dataToDisplay);
-
+            // this.dataSource.createUser(email).subscribe(data => {
+            //         this.dataToDisplay.push(email);
+            //         this.dataSource.setData(this.dataToDisplay);
+            // });
             this.dialog.open(AnswerComponent);
         } else {
             this.dialog.open(AnswerComponent);
         }
+        this.dataSource.createUser(email).subscribe(data => {
+            this.data.push(data);
+            this.dataLength = this.data.length;
+            this.dataSource.setData(this.data);
+        });
     }
+
+    resetPassword(email: string) {
+        this.dataSource.resetPassword(email).subscribe();
+    }
+
+    handlePage(event: PageEvent) {
+        const startIndex = (this.paginator.pageIndex) * this.displayedUsers;
+        const endIndex = startIndex + this.displayedUsers;
+        let dataToDisplay: string[] = this.data;
+        this.dataSource.setData(dataToDisplay.slice(startIndex, endIndex));
+    }
+
 }
