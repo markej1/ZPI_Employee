@@ -24,6 +24,7 @@ import { ProgramsComponent } from './components/programs/programs.component';
 import { DeleteProgramComponent } from './components/delete-program/delete-program.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         UsersComponent,
         ProgramsComponent,
         DeleteProgramComponent,
-        DeleteUserComponent
+        DeleteUserComponent,
+        ErrorComponent
     ],
     imports: [
         BrowserModule,

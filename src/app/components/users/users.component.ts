@@ -5,6 +5,7 @@ import {DeleteUserComponent} from "../delete-user/delete-user.component";
 import {UsersDataSourceService} from "../../services/users-data-source.service";
 import {HttpClient} from "@angular/common/http";
 import {AnswerComponent} from "../answer/answer.component";
+import {ErrorComponent} from "../error/error.component";
 
 @Component({
     selector: 'app-users',
@@ -26,11 +27,11 @@ export class UsersComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.isLoadingResults = true;
-        this.dataSource.getUsers(3).subscribe(data => {
+        this.dataSource.getUsers().subscribe(data => {
             this.isLoadingResults = false;
             this.data = data.map(email => (email !== null ? email : ''));
             this.dataLength = this.data.length;
-            this.dataSource.setData(this.data);
+            this.dataSource.setData(data.slice(this.currentPage, this.displayedUsers));
         });
     }
 
@@ -38,13 +39,22 @@ export class UsersComponent implements AfterViewInit {
         this.dataSource.setData(this.data);
     }
 
-    deleteUser(row: number) {
+    deleteUser(index: number) {
         const dialogRef = this.dialog.open(DeleteUserComponent);
 
         dialogRef.afterClosed().subscribe(result => {
             if(result) {
-                this.data.splice(row, 1);
-                this.dataSource.setData(this.data);
+                this.isLoadingResults = true;
+                this.dataSource.deleteUser(this.data[index]).subscribe( data => {
+                    this.isLoadingResults = false;
+                    this.data.splice(index, 1);
+                    this.dataLength = this.data.length;
+                    this.dataSource.setData(this.data);
+                    this.dialog.open(AnswerComponent);
+                }, error => {
+                    this.isLoadingResults = false;
+                    this.dialog.open(ErrorComponent);
+                });
             }
         });
     }
@@ -62,21 +72,29 @@ export class UsersComponent implements AfterViewInit {
             this.dialog.open(AnswerComponent);
         }
         this.dataSource.createUser(email).subscribe(data => {
-            this.data.push(data);
+            this.data.push(email);
             this.dataLength = this.data.length;
-            this.dataSource.setData(this.data);
+            let dataToDisplay = this.data.slice(this.currentPage, this.displayedUsers);
+            this.dataSource.setData(dataToDisplay);
         });
     }
 
-    resetPassword(email: string) {
-        this.dataSource.resetPassword(email).subscribe();
+    resetPassword(index: number) {
+        this.isLoadingResults = true;
+        this.dataSource.resetPassword(this.data[index]).subscribe( data => {
+            this.isLoadingResults = false;
+            this.dialog.open(AnswerComponent);
+        });
     }
 
     handlePage(event: PageEvent) {
-        const startIndex = (this.paginator.pageIndex) * this.displayedUsers;
-        const endIndex = startIndex + this.displayedUsers;
+        this.displayedUsers = this.paginator.pageSize;
+
+        const startIndex: number = (this.paginator.pageIndex) * this.displayedUsers;
+        const endIndex: number = startIndex + this.displayedUsers;
         let dataToDisplay: string[] = this.data;
         this.dataSource.setData(dataToDisplay.slice(startIndex, endIndex));
-    }
 
+        this.currentPage = this.paginator.pageIndex;
+    }
 }
