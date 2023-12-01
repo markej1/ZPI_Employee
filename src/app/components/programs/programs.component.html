@@ -1,0 +1,37 @@
+<app-margin></app-margin>
+<h1>Programy</h1>
+<div class="table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef>Numer</th>
+            <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fieldOfStudy">
+            <th mat-header-cell *matHeaderCellDef>Kierunek studiów</th>
+            <td mat-cell *matCellDef="let element"> {{element.fieldOfStudy}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="degree">
+            <th mat-header-cell *matHeaderCellDef>Stopień</th>
+            <td mat-cell *matCellDef="let element"> {{element.degree}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef>Cykl</th>
+            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remove">
+            <th mat-header-cell *matHeaderCellDef>Usuń</th>
+            <td mat-cell *matCellDef="let row;let i = index">
+                <button mat-button class="delete-button" (click)="deleteProgram(i)">Delete</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+<mat-paginator (page)=pageChangeEvent($event) [length]="dataLength" [pageSize]="5" aria-label="Select page of users"></mat-paginator>

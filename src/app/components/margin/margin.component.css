@@ -10,7 +10,33 @@
     height: 55px;
 }
 
-#logout_button {
+/*#logout_button {*/
+/*    background: var(--primary-color);*/
+/*    border: none;*/
+/*    height: 100%;*/
+/*    font-family: Amiko, serif;*/
+/*    color: white;*/
+/*    font-size: 18px;*/
+/*    padding: 15px 55px 15px 25px;*/
+/*    float: right;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*#logout_button:hover {*/
+/*    background: var(--logout-hover-color);*/
+/*}*/
+
+#accounts_button, #programs_button {
+    float: left;
+}
+
+#logout_img {
+    padding-left: 10px;
+    height: 22px;
+    position: absolute;
+}
+
+button {
     background: var(--primary-color);
     border: none;
     height: 100%;
@@ -22,12 +48,6 @@
     cursor: pointer;
 }
 
-#logout_button:hover {
+button:hover {
     background: var(--logout-hover-color);
-}
-
-#logout_img {
-    padding-left: 10px;
-    height: 22px;
-    position: absolute;
 }
