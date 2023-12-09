@@ -12,7 +12,6 @@
                 contentClassName="content_file_drop"
                 [dropZoneLabel]="!disabledSections.includes('effects')?'Dodaj efekty uczenia się':filesNames['effects']"
                 (onFileDrop)="dropFile($event, 'effects')"
-                accept=".pdf"
             >
             </ngx-file-drop>
         </button>
@@ -23,7 +22,6 @@
                 contentClassName="content_file_drop"
                 [dropZoneLabel]="!disabledSections.includes('plan')?'Dodaj plan studiów':filesNames['plan']"
                 (onFileDrop)="dropFile($event, 'plan')"
-                accept=".pdf"
             >
             </ngx-file-drop>
         </button>
@@ -34,7 +32,6 @@
                 contentClassName="content_file_drop"
                 [dropZoneLabel]="!disabledSections.includes('program')?'Dodaj opis programu studiów':filesNames['program']"
                 (onFileDrop)="dropFile($event, 'program')"
-                accept=".pdf"
             >
             </ngx-file-drop>
         </button>
@@ -45,13 +42,12 @@
                 contentClassName="content_file_drop"
                 [dropZoneLabel]="!disabledSections.includes('subject')?'Dodaj karty przedmiotów':filesNames['subject']"
                 (onFileDrop)="dropFile($event, 'subject')"
-                accept=".pdf"
             >
             </ngx-file-drop>
         </button>
 
     </section>
-    <input id="input_file" type="file" (change)="chooseFile($event)">
+    <input id="input_file" type="file" (change)="chooseFile($event)" accept="application/pdf">
 
     <section class="section_button_decisions">
         <button class="button_decision" mat-raised-button (click)="cancel()">Anuluj</button>

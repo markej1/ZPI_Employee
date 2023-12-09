@@ -7,9 +7,9 @@ import {AuthService} from "../../services/http/auth.service";
 import {Token} from "../../model/token";
 
 @Component({
-  selector: 'app-program',
-  templateUrl: './program.component.html',
-  styleUrls: ['./program.component.css']
+    selector: 'app-program',
+    templateUrl: './program.component.html',
+    styleUrls: ['./program.component.css']
 })
 export class ProgramComponent implements OnInit {
 
@@ -20,7 +20,7 @@ export class ProgramComponent implements OnInit {
     disabledSections: string[];
     actualSection?: string;
 
-    filesNames: {[key: string]: string};
+    filesNames: { [key: string]: string };
 
     isLogged?: boolean;
     token?: Token
@@ -56,7 +56,7 @@ export class ProgramComponent implements OnInit {
     // }
 
     dropFile(files: NgxFileDropEntry[], id: string) {
-        if (!this.disabledSections.includes(id) && files[0].fileEntry.isFile) {
+        if (!this.disabledSections.includes(id) && files[0].fileEntry.isFile && this.isPdf(files[0].relativePath)) {
 
             const fileEntry = files[0].fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
@@ -86,6 +86,10 @@ export class ProgramComponent implements OnInit {
             this.fileList?.push(this.chosenFile);
             console.log(this.chosenFile)
         }
+    }
+
+    isPdf(path: String): boolean {
+        return path.endsWith(".pdf");
     }
 
     cancel() {
