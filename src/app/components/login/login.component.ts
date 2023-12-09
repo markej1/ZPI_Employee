@@ -47,7 +47,11 @@ export class LoginComponent {
                     this.cookiesService.setCookie("email", this.token.email);
                     this.cookiesService.setCookie("idToken", this.token.idToken);
                     this.cookiesService.setCookie("isAdmin", this.token.isAdmin.toString());
-                    this.router.navigateByUrl("/program").then();
+                    if (this.token.isAdmin) {
+                        this.router.navigateByUrl("/programs").then();
+                    } else {
+                        this.router.navigateByUrl("/program").then();
+                    }
                 },
                 error: err => {
                     this.errorMessage = err.message;
