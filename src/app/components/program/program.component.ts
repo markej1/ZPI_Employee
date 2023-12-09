@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgxFileDropEntry} from "ngx-file-drop";
+import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {AnswerComponent} from "../answer/answer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CookiesService} from "../../services/cookies.service";
@@ -24,6 +24,8 @@ export class ProgramComponent implements OnInit {
 
     isLogged?: boolean;
     token?: Token
+
+    fileList: File[] = [];
 
     constructor(
         private dialog: MatDialog,
@@ -54,10 +56,17 @@ export class ProgramComponent implements OnInit {
     // }
 
     dropFile(files: NgxFileDropEntry[], id: string) {
-        console.log(files[0].relativePath);
-        if (!this.disabledSections.includes(id)) {
+        if (!this.disabledSections.includes(id) && files[0].fileEntry.isFile) {
+
+            const fileEntry = files[0].fileEntry as FileSystemFileEntry;
+            fileEntry.file((file: File) => {
+                this.fileList?.push(file);
+                console.log(file);
+            });
+
             this.disabledSections.push(id);
             this.filesNames[id] = files[0].relativePath;
+
         }
     }
 
@@ -74,6 +83,8 @@ export class ProgramComponent implements OnInit {
         if (this.chosenFile) {
             this.filesNames[this.actualSection!] = this.chosenFile.name;
             this.disabledSections.push(this.actualSection!);
+            this.fileList?.push(this.chosenFile);
+            console.log(this.chosenFile)
         }
     }
 
@@ -82,7 +93,12 @@ export class ProgramComponent implements OnInit {
     }
 
     approve() {
-        this.dialog.open(AnswerComponent);
+        console.log(this.fileList?.length);
+        if (this.fileList?.length === 4) {
+            console.log(this.fileList)
+            this.dialog.open(AnswerComponent);
+        }
+        this.cancel();
     }
 
 }
