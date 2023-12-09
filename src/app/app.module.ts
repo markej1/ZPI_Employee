@@ -25,6 +25,7 @@ import { DeleteProgramComponent } from './components/delete-program/delete-progr
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ErrorComponent } from './components/error/error.component';
+import { NotauthComponent } from './components/notauth/notauth.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { ErrorComponent } from './components/error/error.component';
         ProgramsComponent,
         DeleteProgramComponent,
         DeleteUserComponent,
-        ErrorComponent
+        ErrorComponent,
+        NotauthComponent
     ],
     imports: [
         BrowserModule,

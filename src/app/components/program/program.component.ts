@@ -3,13 +3,16 @@ import {NgxFileDropEntry} from "ngx-file-drop";
 import {AnswerComponent} from "../answer/answer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CookiesService} from "../../services/cookies.service";
+import {AuthService} from "../../services/http/auth.service";
+import {Token} from "../../model/token";
+import {CheckAuth} from "../../services/check-auth.service";
 
 @Component({
   selector: 'app-program',
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.css']
 })
-export class ProgramComponent implements OnDestroy{
+export class ProgramComponent {
 
     files: NgxFileDropEntry[] = [];
 
@@ -21,17 +24,28 @@ export class ProgramComponent implements OnDestroy{
     filesNames: {[key: string]: string};
 
     isLogged: boolean = false;
+    errorMessage: string = "";
+    token?: Token
 
-    constructor(private dialog: MatDialog, private cookiesService: CookiesService) {
+    constructor(
+        private dialog: MatDialog,
+        private cookiesService: CookiesService,
+        private authService: AuthService,
+        private checkAuth: CheckAuth
+    ) {
         this.disabledSections = [];
         this.filesNames = {};
-        this.isLogged = cookiesService.getCookie("email") !== "" && cookiesService.getCookie("idToken") !== "";
+        this.token = {
+            email: this.cookiesService.getCookie("email"),
+            idToken: this.cookiesService.getCookie("idToken")
+        };
+        this.isLogged = this.checkAuth.checkAuth(this.token, this.authService);
     }
 
-    ngOnDestroy() {
-        this.cookiesService.removeCookie("email");
-        this.cookiesService.removeCookie("idToken");
-    }
+    // ngOnDestroy() {
+    //     this.cookiesService.removeCookie("email");
+    //     this.cookiesService.removeCookie("idToken");
+    // }
 
     dropFile(files: NgxFileDropEntry[], id: string) {
         console.log(files[0].relativePath);

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/http/auth.service";
 import {UserData} from "../../model/user-data";
@@ -10,7 +10,7 @@ import {CookiesService} from "../../services/cookies.service";
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     login?: string;
     password?: string;
@@ -22,6 +22,11 @@ export class LoginComponent {
     errorMessage?: string;
 
     constructor(private router: Router, private authService: AuthService, private cookiesService: CookiesService) {
+    }
+
+    ngOnInit() {
+        this.cookiesService.removeCookie("email");
+        this.cookiesService.removeCookie("idToken");
     }
 
     changeVisibility() {

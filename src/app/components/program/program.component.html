@@ -62,5 +62,5 @@
 
 
 <section id="not_logged" *ngIf="!isLogged">
-    <p id="not_logged_text">Zaloguj się, aby przejść do tej strony.</p>
+    <app-notauth [message]="errorMessage"></app-notauth>
 </section>
