@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/http/auth.service";
 import {UserData} from "../../model/user-data";
@@ -10,7 +10,7 @@ import {CookiesService} from "../../services/cookies.service";
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
     login?: string;
     password?: string;
@@ -22,11 +22,9 @@ export class LoginComponent implements OnInit {
     errorMessage?: string;
 
     constructor(private router: Router, private authService: AuthService, private cookiesService: CookiesService) {
-    }
-
-    ngOnInit() {
         this.cookiesService.removeCookie("email");
         this.cookiesService.removeCookie("idToken");
+        this.cookiesService.removeCookie("isAdmin");
     }
 
     changeVisibility() {
@@ -43,11 +41,13 @@ export class LoginComponent implements OnInit {
                 next: tokenGiven => {
                     this.token = {
                         email: tokenGiven.email,
-                        idToken: tokenGiven.idToken
+                        idToken: tokenGiven.idToken,
+                        isAdmin: tokenGiven.isAdmin
                     };
                     this.cookiesService.setCookie("email", this.token.email);
                     this.cookiesService.setCookie("idToken", this.token.idToken);
-                    this.router.navigateByUrl("/program");
+                    this.cookiesService.setCookie("isAdmin", this.token.isAdmin.toString());
+                    this.router.navigateByUrl("/program").then();
                 },
                 error: err => {
                     this.errorMessage = err.message;

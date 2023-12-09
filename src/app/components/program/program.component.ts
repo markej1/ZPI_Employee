@@ -1,18 +1,17 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgxFileDropEntry} from "ngx-file-drop";
 import {AnswerComponent} from "../answer/answer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CookiesService} from "../../services/cookies.service";
 import {AuthService} from "../../services/http/auth.service";
 import {Token} from "../../model/token";
-import {CheckAuth} from "../../services/check-auth.service";
 
 @Component({
   selector: 'app-program',
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.css']
 })
-export class ProgramComponent {
+export class ProgramComponent implements OnInit {
 
     files: NgxFileDropEntry[] = [];
 
@@ -23,23 +22,30 @@ export class ProgramComponent {
 
     filesNames: {[key: string]: string};
 
-    isLogged: boolean = false;
-    errorMessage: string = "";
+    isLogged?: boolean;
     token?: Token
 
     constructor(
         private dialog: MatDialog,
         private cookiesService: CookiesService,
         private authService: AuthService,
-        private checkAuth: CheckAuth
     ) {
         this.disabledSections = [];
         this.filesNames = {};
+    }
+
+    ngOnInit() {
         this.token = {
             email: this.cookiesService.getCookie("email"),
-            idToken: this.cookiesService.getCookie("idToken")
+            idToken: this.cookiesService.getCookie("idToken"),
+            isAdmin: this.cookiesService.getCookie("isAdmin") === "true"
         };
-        this.isLogged = this.checkAuth.checkAuth(this.token, this.authService);
+        // this.isLogged = this.checkAuth.checkAuth(this.token, this.authService);
+        this.authService.checkAuth(this.token).subscribe({
+            next: loginInfo => {
+                this.isLogged = loginInfo.isLog;
+            }
+        });
     }
 
     // ngOnDestroy() {

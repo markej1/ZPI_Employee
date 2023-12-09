@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {UserData} from "../../model/user-data";
 import {Token} from "../../model/token";
 import {AuthErrorService} from "../errors/auth-error.service";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, Observable} from "rxjs";
 import {LoginInfo} from "../../model/login-info";
 
 @Injectable({
@@ -25,7 +25,7 @@ export class AuthService {
     }
 
     checkAuth(token: Token): Observable<LoginInfo> {
-        return this.http.post<LoginInfo>("https://susel.pythonanywhere.com/", token);
+        return this.http.post<LoginInfo>("https://susel.pythonanywhere.com/check/", token);
     }
 
 }

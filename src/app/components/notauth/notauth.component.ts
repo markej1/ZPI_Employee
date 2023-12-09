@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-notauth',
@@ -6,7 +6,4 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./notauth.component.css']
 })
 export class NotauthComponent {
-
-    @Input() message: string = "Wystąpił jakiś niezidentyfikowany błąd...";
-
 }
