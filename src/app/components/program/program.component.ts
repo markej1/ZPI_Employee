@@ -26,7 +26,7 @@ export class ProgramComponent implements OnInit {
     isLogged?: boolean;
     token?: Token
 
-    fileList: File[] = [];
+    fileList: { [key: string]: File };
 
     constructor(
         private dialog: MatDialog,
@@ -36,6 +36,7 @@ export class ProgramComponent implements OnInit {
     ) {
         this.disabledSections = [];
         this.filesNames = {};
+        this.fileList = {};
     }
 
     ngOnInit() {
@@ -62,7 +63,7 @@ export class ProgramComponent implements OnInit {
 
             const fileEntry = files[0].fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
-                this.fileList?.push(file);
+                this.fileList[id] = file;
                 console.log(file);
             });
 
@@ -85,7 +86,7 @@ export class ProgramComponent implements OnInit {
         if (this.chosenFile) {
             this.filesNames[this.actualSection!] = this.chosenFile.name;
             this.disabledSections.push(this.actualSection!);
-            this.fileList?.push(this.chosenFile);
+            this.fileList[this.actualSection!] = this.chosenFile;
             console.log(this.chosenFile)
         }
     }
@@ -100,19 +101,27 @@ export class ProgramComponent implements OnInit {
 
     approve() {
         const formData = new FormData();
-        this.fileList.forEach((file: File) => formData.append('files[]', file));
-        if (this.fileList?.length === 4) {
-            this.fileService.sendFiles(formData).subscribe();
-            this.openDialog(true);
-        } else {
-            this.openDialog(false);
-        }
+        formData.append("pdf_file_effects", this.fileList["pdf_file_effects"]);
+        formData.append("pdf_file_plan", this.fileList["pdf_file_plan"]);
+        formData.append("pdf_file_program", this.fileList["pdf_file_program"]);
+        formData.append("pdf_file_cards", this.fileList["pdf_file_cards"]);
+
+        this.fileService.sendFiles(formData).subscribe({
+            next: text => {
+                this.openDialog(true, text);
+            },
+            error: err => {
+                this.openDialog(false, err.message);
+            }
+        });
+
     }
 
-    openDialog(answer: boolean) {
+    openDialog(answer: boolean, message: string) {
         this.dialog.open(AnswerComponent, {
             data: {
-                answer: answer
+                answer: answer,
+                message: message
             }
         });
     }

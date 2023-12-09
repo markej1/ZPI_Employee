@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {FileErrorService} from "../errors/file-error.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError} from "rxjs";
+import {catchError, Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -14,12 +14,12 @@ export class FileService {
         this.fileErrorService = new FileErrorService();
     }
 
-    sendFiles(files: FormData) {
-        const httpOptions = {
-            headers: new HttpHeaders({'Content-Disposition': 'multipart/form-data'})
-        };
+    sendFiles(files: FormData): Observable<string> {
+        // const httpOptions = {
+        //     headers: new HttpHeaders({'Content-Disposition': 'multipart/form-data'})
+        // };
 
-        return this.http.post("https://susel.pythonanywhere.com/upload/", files, httpOptions)
+        return this.http.post<string>("https://susel.pythonanywhere.com/upload/", files)
             .pipe(
                 catchError(this.fileErrorService!.fileError)
             );

@@ -9,12 +9,14 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 export class AnswerComponent implements OnInit{
 
     answer: boolean = false;
+    message: string = ""
 
     constructor(@Inject(MAT_DIALOG_DATA) public answerData: any) {
     }
 
     ngOnInit() {
-        this.answer = this.answerData.answer
+        this.answer = this.answerData.answer;
+        this.message = this.answerData.message;
     }
 
 }

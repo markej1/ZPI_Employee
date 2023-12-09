@@ -12,6 +12,8 @@ export class FileErrorService {
     fileError(error: HttpErrorResponse) {
         if (error.status === 400) {
             return throwError(() => new Error("Niepoprawne pliki."));
+        } else if (error.status === 405) {
+            return throwError(() => new Error("Nieprawidłowa metoda żądania."));
         } else {
             return throwError(() => new Error("Błąd serwera."));
         }
