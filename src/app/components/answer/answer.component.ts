@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-answer',
   templateUrl: './answer.component.html',
   styleUrls: ['./answer.component.css']
 })
-export class AnswerComponent {
+export class AnswerComponent implements OnInit{
 
-    answer: boolean = true;
+    answer: boolean = false;
+
+    constructor(@Inject(MAT_DIALOG_DATA) public answerData: any) {
+    }
+
+    ngOnInit() {
+        this.answer = this.answerData.answer
+    }
 
 }

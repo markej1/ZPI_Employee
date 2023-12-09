@@ -97,12 +97,20 @@ export class ProgramComponent implements OnInit {
     }
 
     approve() {
-        console.log(this.fileList?.length);
         if (this.fileList?.length === 4) {
-            console.log(this.fileList)
-            this.dialog.open(AnswerComponent);
+            console.log(this.fileList);
+            this.dialog.open(AnswerComponent, {
+                data: {
+                    answer: true
+                }
+            });
+        } else {
+            this.dialog.open(AnswerComponent, {
+                data: {
+                    answer: false
+                }
+            });
         }
-        this.cancel();
     }
 
 }
