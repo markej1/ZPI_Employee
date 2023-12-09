@@ -5,6 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CookiesService} from "../../services/cookies.service";
 import {AuthService} from "../../services/http/auth.service";
 import {Token} from "../../model/token";
+import {FileService} from "../../services/http/file.service";
 
 @Component({
     selector: 'app-program',
@@ -31,6 +32,7 @@ export class ProgramComponent implements OnInit {
         private dialog: MatDialog,
         private cookiesService: CookiesService,
         private authService: AuthService,
+        private fileService: FileService
     ) {
         this.disabledSections = [];
         this.filesNames = {};
@@ -97,20 +99,22 @@ export class ProgramComponent implements OnInit {
     }
 
     approve() {
+        const formData = new FormData();
+        this.fileList.forEach((file: File) => formData.append('files[]', file));
         if (this.fileList?.length === 4) {
-            console.log(this.fileList);
-            this.dialog.open(AnswerComponent, {
-                data: {
-                    answer: true
-                }
-            });
+            this.fileService.sendFiles(formData).subscribe();
+            this.openDialog(true);
         } else {
-            this.dialog.open(AnswerComponent, {
-                data: {
-                    answer: false
-                }
-            });
+            this.openDialog(false);
         }
+    }
+
+    openDialog(answer: boolean) {
+        this.dialog.open(AnswerComponent, {
+            data: {
+                answer: answer
+            }
+        });
     }
 
 }
