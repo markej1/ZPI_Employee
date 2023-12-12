@@ -9,7 +9,7 @@ export class AuthErrorService {
 
     constructor() {}
 
-    notAuthorized(error: HttpErrorResponse) {
+    loginError(error: HttpErrorResponse) {
         if (error.status === 404) {
             return throwError(() => new Error("Niepoprawne dane."));
         } else {

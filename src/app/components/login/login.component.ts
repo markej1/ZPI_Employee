@@ -22,6 +22,9 @@ export class LoginComponent {
     errorMessage?: string;
 
     constructor(private router: Router, private authService: AuthService, private cookiesService: CookiesService) {
+        this.cookiesService.removeCookie("email");
+        this.cookiesService.removeCookie("idToken");
+        this.cookiesService.removeCookie("isAdmin");
     }
 
     changeVisibility() {
@@ -38,11 +41,17 @@ export class LoginComponent {
                 next: tokenGiven => {
                     this.token = {
                         email: tokenGiven.email,
-                        idToken: tokenGiven.idToken
+                        idToken: tokenGiven.idToken,
+                        isAdmin: tokenGiven.isAdmin
                     };
                     this.cookiesService.setCookie("email", this.token.email);
                     this.cookiesService.setCookie("idToken", this.token.idToken);
-                    this.router.navigateByUrl("/program");
+                    this.cookiesService.setCookie("isAdmin", this.token.isAdmin.toString());
+                    if (this.token.isAdmin) {
+                        this.router.navigateByUrl("/programs").then();
+                    } else {
+                        this.router.navigateByUrl("/program").then();
+                    }
                 },
                 error: err => {
                     this.errorMessage = err.message;

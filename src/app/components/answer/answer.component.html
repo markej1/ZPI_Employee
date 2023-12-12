@@ -1,5 +1,4 @@
 <div class="answer_content">
-    <p *ngIf="answer">Dodawanie zakończyło się pomyślnie.</p>
-    <p *ngIf="!answer">Dodawanie się nie powiodło. Spróbuj jeszcze raz.</p>
+    <p id="answer_message">{{message}}</p>
     <img id="answer_img" [src]="answer?'../../../assets/accept.png':'../../../assets/cancel.png'" alt="Answer">
 </div>

@@ -1,15 +1,19 @@
-import {Component, OnDestroy} from '@angular/core';
-import {NgxFileDropEntry} from "ngx-file-drop";
+import {Component, OnInit} from '@angular/core';
+import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {AnswerComponent} from "../answer/answer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CookiesService} from "../../services/cookies.service";
+import {AuthService} from "../../services/http/auth.service";
+import {Token} from "../../model/token";
+import {FileService} from "../../services/http/file.service";
+import {LoaderService} from "../../services/loader.service";
 
 @Component({
-  selector: 'app-program',
-  templateUrl: './program.component.html',
-  styleUrls: ['./program.component.css']
+    selector: 'app-program',
+    templateUrl: './program.component.html',
+    styleUrls: ['./program.component.css']
 })
-export class ProgramComponent implements OnDestroy{
+export class ProgramComponent implements OnInit {
 
     files: NgxFileDropEntry[] = [];
 
@@ -18,26 +22,59 @@ export class ProgramComponent implements OnDestroy{
     disabledSections: string[];
     actualSection?: string;
 
-    filesNames: {[key: string]: string};
+    filesNames: { [key: string]: string };
 
-    isLogged: boolean = false;
+    isLogged?: boolean;
+    token?: Token
 
-    constructor(private dialog: MatDialog, private cookiesService: CookiesService) {
+    fileList: { [key: string]: File };
+
+    constructor(
+        private dialog: MatDialog,
+        private cookiesService: CookiesService,
+        private authService: AuthService,
+        private fileService: FileService,
+        public loaderService: LoaderService
+    ) {
         this.disabledSections = [];
         this.filesNames = {};
-        this.isLogged = cookiesService.getCookie("email") !== "" && cookiesService.getCookie("idToken") !== "";
+        this.fileList = {};
     }
 
-    ngOnDestroy() {
-        this.cookiesService.removeCookie("email");
-        this.cookiesService.removeCookie("idToken");
+    ngOnInit() {
+        this.token = {
+            email: this.cookiesService.getCookie("email"),
+            idToken: this.cookiesService.getCookie("idToken"),
+            isAdmin: this.cookiesService.getCookie("isAdmin") === "true"
+        };
+        console.log("onInit");
+        this.loaderService.setLoading1(true);
+        this.authService.checkAuth(this.token).subscribe({
+            next: loginInfo => {
+                this.isLogged = loginInfo.isLog;
+            },
+            error: () => {
+                this.isLogged = false;
+                this.loaderService.setLoading1(false);
+            },
+            complete: () => {
+                this.loaderService.setLoading1(false);
+            }
+        });
     }
 
     dropFile(files: NgxFileDropEntry[], id: string) {
-        console.log(files[0].relativePath);
-        if (!this.disabledSections.includes(id)) {
+        if (!this.disabledSections.includes(id) && files[0].fileEntry.isFile && this.isPdf(files[0].relativePath)) {
+
+            const fileEntry = files[0].fileEntry as FileSystemFileEntry;
+            fileEntry.file((file: File) => {
+                this.fileList[id] = file;
+                console.log(file);
+            });
+
             this.disabledSections.push(id);
             this.filesNames[id] = files[0].relativePath;
+
         }
     }
 
@@ -54,7 +91,13 @@ export class ProgramComponent implements OnDestroy{
         if (this.chosenFile) {
             this.filesNames[this.actualSection!] = this.chosenFile.name;
             this.disabledSections.push(this.actualSection!);
+            this.fileList[this.actualSection!] = this.chosenFile;
+            console.log(this.chosenFile)
         }
+    }
+
+    isPdf(path: String): boolean {
+        return path.endsWith(".pdf");
     }
 
     cancel() {
@@ -62,7 +105,30 @@ export class ProgramComponent implements OnDestroy{
     }
 
     approve() {
-        this.dialog.open(AnswerComponent);
+        const formData = new FormData();
+        formData.append("pdf_file_effects", this.fileList["pdf_file_effects"]);
+        formData.append("pdf_file_plan", this.fileList["pdf_file_plan"]);
+        formData.append("pdf_file_program", this.fileList["pdf_file_program"]);
+        formData.append("pdf_file_cards", this.fileList["pdf_file_cards"]);
+
+        this.fileService.sendFiles(formData).subscribe({
+            next: text => {
+                this.openDialog(true, text);
+            },
+            error: err => {
+                this.openDialog(false, err.message);
+            }
+        });
+
+    }
+
+    openDialog(answer: boolean, message: string) {
+        this.dialog.open(AnswerComponent, {
+            data: {
+                answer: answer,
+                message: message
+            }
+        });
     }
 
 }
