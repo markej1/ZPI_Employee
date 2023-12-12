@@ -6,6 +6,7 @@ import {CookiesService} from "../../services/cookies.service";
 import {AuthService} from "../../services/http/auth.service";
 import {Token} from "../../model/token";
 import {FileService} from "../../services/http/file.service";
+import {LoaderService} from "../../services/loader.service";
 
 @Component({
     selector: 'app-program',
@@ -32,7 +33,8 @@ export class ProgramComponent implements OnInit {
         private dialog: MatDialog,
         private cookiesService: CookiesService,
         private authService: AuthService,
-        private fileService: FileService
+        private fileService: FileService,
+        public loaderService: LoaderService
     ) {
         this.disabledSections = [];
         this.filesNames = {};
@@ -45,18 +47,21 @@ export class ProgramComponent implements OnInit {
             idToken: this.cookiesService.getCookie("idToken"),
             isAdmin: this.cookiesService.getCookie("isAdmin") === "true"
         };
-        // this.isLogged = this.checkAuth.checkAuth(this.token, this.authService);
+        console.log("onInit");
+        this.loaderService.setLoading1(true);
         this.authService.checkAuth(this.token).subscribe({
             next: loginInfo => {
                 this.isLogged = loginInfo.isLog;
+            },
+            error: () => {
+                this.isLogged = false;
+                this.loaderService.setLoading1(false);
+            },
+            complete: () => {
+                this.loaderService.setLoading1(false);
             }
         });
     }
-
-    // ngOnDestroy() {
-    //     this.cookiesService.removeCookie("email");
-    //     this.cookiesService.removeCookie("idToken");
-    // }
 
     dropFile(files: NgxFileDropEntry[], id: string) {
         if (!this.disabledSections.includes(id) && files[0].fileEntry.isFile && this.isPdf(files[0].relativePath)) {

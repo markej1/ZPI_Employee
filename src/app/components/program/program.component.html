@@ -56,7 +56,10 @@
 
 </section>
 
+<section class="spinner" *ngIf="this.loaderService.getLoading1()">
+    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+</section>
 
-<section id="not_logged" *ngIf="!isLogged">
+<section id="not_logged" *ngIf="!isLogged && !this.loaderService.getLoading1()">
     <app-notauth></app-notauth>
 </section>
