@@ -6,6 +6,7 @@ import {UsersDataSourceService} from "../../services/http/users-data-source.serv
 import {HttpClient} from "@angular/common/http";
 import {AnswerComponent} from "../answer/answer.component";
 import {ErrorComponent} from "../error/error.component";
+import {Observer} from "rxjs";
 
 @Component({
     selector: 'app-users',
@@ -44,17 +45,22 @@ export class UsersComponent implements AfterViewInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if(result) {
+                const observer: Observer<any> = {
+                    next: (data) => {
+                        this.isLoadingResults = false;
+                        this.data.splice(index, 1);
+                        this.dataLength = this.data.length;
+                        this.dataSource.setData(this.data);
+                        this.dialog.open(AnswerComponent);
+                    },
+                    error: (error) => {
+                        this.isLoadingResults = false;
+                        this.dialog.open(ErrorComponent);
+                    },
+                    complete: () => {}
+                };
                 this.isLoadingResults = true;
-                this.dataSource.deleteUser(this.data[index]).subscribe( data => {
-                    this.isLoadingResults = false;
-                    this.data.splice(index, 1);
-                    this.dataLength = this.data.length;
-                    this.dataSource.setData(this.data);
-                    this.dialog.open(AnswerComponent);
-                }, error => {
-                    this.isLoadingResults = false;
-                    this.dialog.open(ErrorComponent);
-                });
+                this.dataSource.deleteUser(this.data[index]).subscribe(observer);
             }
         });
     }
@@ -71,12 +77,22 @@ export class UsersComponent implements AfterViewInit {
         } else {
             this.dialog.open(AnswerComponent);
         }
-        this.dataSource.createUser(email).subscribe(data => {
-            this.data.push(email);
-            this.dataLength = this.data.length;
-            let dataToDisplay = this.data.slice(this.currentPage, this.displayedUsers);
-            this.dataSource.setData(dataToDisplay);
-        });
+
+        const observer: Observer<any> = {
+            next: (data) => {
+                this.data.push(email);
+                this.dataLength = this.data.length;
+                let dataToDisplay = this.data.slice(this.currentPage, this.displayedUsers);
+                this.dataSource.setData(dataToDisplay);
+            },
+            error: (error) => {
+                this.isLoadingResults = false;
+                this.dialog.open(ErrorComponent);
+            },
+            complete: () => {}
+        };
+
+        this.dataSource.createUser(email).subscribe(observer);
     }
 
     resetPassword(index: number) {

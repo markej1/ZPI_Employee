@@ -1,26 +1,34 @@
 <app-margin></app-margin>
 <h1>Programy</h1>
 <div class="table">
+    <div *ngIf="isLoadingResults" class="loading-shade">
+        <mat-spinner></mat-spinner>
+    </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef>Numer</th>
-            <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
         </ng-container>
 
         <ng-container matColumnDef="fieldOfStudy">
             <th mat-header-cell *matHeaderCellDef>Kierunek studiów</th>
-            <td mat-cell *matCellDef="let element"> {{element.fieldOfStudy}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="degree">
             <th mat-header-cell *matHeaderCellDef>Stopień</th>
-            <td mat-cell *matCellDef="let element"> {{element.degree}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.level}} </td>
         </ng-container>
 
         <ng-container matColumnDef="year">
             <th mat-header-cell *matHeaderCellDef>Cykl</th>
-            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.startingYear}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="specialization">
+            <th mat-header-cell *matHeaderCellDef>Specjalność</th>
+            <td mat-cell *matCellDef="let element"> {{element.specialization}} </td>
         </ng-container>
 
         <ng-container matColumnDef="remove">
@@ -34,4 +42,11 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </div>
-<mat-paginator (page)=pageChangeEvent($event) [length]="dataLength" [pageSize]="5" aria-label="Select page of users"></mat-paginator>
+<mat-paginator [pageSize]="displayedPrograms"
+               [showFirstLastButtons]="true"
+               [length]="dataLength"
+               [pageIndex]="currentPage"
+               (page)="handlePage($event)"
+               [pageSizeOptions]="[5, 10, 15]"
+               aria-label="Select page of users">
+</mat-paginator>
