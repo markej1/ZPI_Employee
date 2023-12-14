@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteUserComponent} from "../delete-user/delete-user.component";
-import {UsersDataSourceService} from "../../services/users-data-source.service";
+import {UsersDataSourceService} from "../../services/http/users-data-source.service";
 import {HttpClient} from "@angular/common/http";
 import {AnswerComponent} from "../answer/answer.component";
 import {ErrorComponent} from "../error/error.component";

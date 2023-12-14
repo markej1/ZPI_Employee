@@ -10,12 +10,16 @@ import {CookiesService} from "../../services/cookies.service";
 export class MarginComponent implements OnInit{
 
     isLogged: boolean = false;
+    isAdmin: boolean = false;
 
     constructor(private router: Router, private cookiesService: CookiesService) {}
 
     ngOnInit() {
         if (this.cookiesService.getCookie("email") !== "" && this.cookiesService.getCookie("idToken") !== "") {
             this.isLogged = true;
+        }
+        if (this.cookiesService.getCookie("isAdmin") === "true") {
+            this.isAdmin = true;
         }
     }
 

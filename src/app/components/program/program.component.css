@@ -53,13 +53,13 @@ input[type="file"] {
     --mdc-protected-button-label-text-color: white;
 }
 
-#not_logged {
+.spinner {
     position: absolute;
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#not_logged_text {
-    font-family: Amiko, serif;
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+    stroke: var(--primary-color) !important;
 }

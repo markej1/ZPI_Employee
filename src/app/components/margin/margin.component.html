@@ -1,8 +1,8 @@
 <header class="top-menu">
-    <button id="programs_button" [routerLink]="['/programs']">
+    <button id="programs_button" *ngIf="isAdmin" [routerLink]="['/programs']">
         Programy
     </button>
-    <button id="accounts_button" [routerLink]="['/users']">
+    <button id="accounts_button" *ngIf="isAdmin" [routerLink]="['/users']">
         Konta
     </button>
     <button id="logout_button" *ngIf="isLogged" (click)="logout()">
