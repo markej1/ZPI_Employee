@@ -47,7 +47,6 @@ export class ProgramComponent implements OnInit {
             idToken: this.cookiesService.getCookie("idToken"),
             isAdmin: this.cookiesService.getCookie("isAdmin") === "true"
         };
-        console.log("onInit");
         this.loaderService.setLoading1(true);
         this.authService.checkAuth(this.token).subscribe({
             next: loginInfo => {
@@ -69,7 +68,6 @@ export class ProgramComponent implements OnInit {
             const fileEntry = files[0].fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
                 this.fileList[id] = file;
-                console.log(file);
             });
 
             this.disabledSections.push(id);
@@ -92,7 +90,6 @@ export class ProgramComponent implements OnInit {
             this.filesNames[this.actualSection!] = this.chosenFile.name;
             this.disabledSections.push(this.actualSection!);
             this.fileList[this.actualSection!] = this.chosenFile;
-            console.log(this.chosenFile)
         }
     }
 
@@ -112,8 +109,8 @@ export class ProgramComponent implements OnInit {
         formData.append("pdf_file_cards", this.fileList["pdf_file_cards"]);
 
         this.fileService.sendFiles(formData).subscribe({
-            next: text => {
-                this.openDialog(true, text);
+            next: () => {
+                this.openDialog(true, "Pliki dodano pomyślnie");
             },
             error: err => {
                 this.openDialog(false, err.message);
