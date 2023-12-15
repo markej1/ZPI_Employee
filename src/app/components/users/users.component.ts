@@ -51,11 +51,21 @@ export class UsersComponent implements AfterViewInit {
                         this.data.splice(index, 1);
                         this.dataLength = this.data.length;
                         this.dataSource.setData(this.data);
-                        this.dialog.open(AnswerComponent);
+                        this.dialog.open(AnswerComponent, {
+                            data: {
+                                message: data.message,
+                                answer: true
+                            }
+                        });
                     },
                     error: (error) => {
                         this.isLoadingResults = false;
-                        this.dialog.open(ErrorComponent);
+                        this.dialog.open(AnswerComponent, {
+                            data: {
+                                message: error.message,
+                                answer: false
+                            }
+                        });
                     },
                     complete: () => {}
                 };
@@ -68,39 +78,61 @@ export class UsersComponent implements AfterViewInit {
     addUser(email: string) {
         const parts: string[] = email.split('@');
         const domain: string = parts[1];
-        if(domain === 'pwr.edu.pl') {
-            // this.dataSource.createUser(email).subscribe(data => {
-            //         this.dataToDisplay.push(email);
-            //         this.dataSource.setData(this.dataToDisplay);
-            // });
-            this.dialog.open(AnswerComponent);
-        } else {
-            this.dialog.open(AnswerComponent);
-        }
 
         const observer: Observer<any> = {
             next: (data) => {
+                this.isLoadingResults = false;
                 this.data.push(email);
                 this.dataLength = this.data.length;
                 let dataToDisplay = this.data.slice(this.currentPage, this.displayedUsers);
-                this.dataSource.setData(dataToDisplay);
+                this.dialog.open(AnswerComponent, {
+                    data: {
+                        message: data.message,
+                        answer: true
+                    }
+                });
             },
             error: (error) => {
                 this.isLoadingResults = false;
-                this.dialog.open(ErrorComponent);
+                this.dialog.open(AnswerComponent, {
+                    data: {
+                        message: error.message,
+                        answer: false
+                    }
+                });
             },
             complete: () => {}
         };
 
+        this.isLoadingResults = true;
         this.dataSource.createUser(email).subscribe(observer);
     }
 
     resetPassword(index: number) {
+        const observer: Observer<any> = {
+            next: (data) => {
+                this.isLoadingResults = false;
+                this.dialog.open(AnswerComponent, {
+                    data: {
+                        message: data.message,
+                        answer: true
+                    }
+                });
+            },
+            error: (error) => {
+                this.isLoadingResults = false;
+                this.dialog.open(AnswerComponent, {
+                    data: {
+                        message: error.message,
+                        answer: false
+                    }
+                });
+            },
+            complete: () => {}
+        };
+
         this.isLoadingResults = true;
-        this.dataSource.resetPassword(this.data[index]).subscribe( data => {
-            this.isLoadingResults = false;
-            this.dialog.open(AnswerComponent);
-        });
+        this.dataSource.resetPassword(this.data[index]).subscribe(observer)
     }
 
     handlePage(event: PageEvent) {

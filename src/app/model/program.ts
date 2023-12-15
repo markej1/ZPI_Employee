@@ -1,6 +1,7 @@
 export interface Program {
-    year: string;
-    fieldOfStudy: string;
-    degree: string;
+    startingYear: number;
+    name: string;
+    level: number;
     specialization: string
 }
+

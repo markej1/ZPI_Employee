@@ -28,11 +28,11 @@ export class ProgramsDataSourceService extends DataSource<Program> {
         return this._httpClient.get<Program[]>(`${this._url}/list-programs/`)
     }
 
-    deleteProgram(level: string, name: string, cycle: string, specialization: string) {
+    deleteProgram(level: number, name: string, cycle: number, specialization: string) {
         if(specialization === undefined) {
-            return this._httpClient.delete<string>(`${this._url}/delete-program/${level}/${name}/${cycle}/`)
+            return this._httpClient.get<string>(`${this._url}/delete-program/${level}/${name}/${cycle}/`)
         } else {
-            return this._httpClient.delete<string>(`${this._url}/delete-program/${level}/${name}/${cycle}/${specialization}/`)
+            return this._httpClient.get<string>(`${this._url}/delete-program/${level}/${name}/${cycle}/${specialization}/`)
         }
     }
 }

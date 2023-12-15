@@ -35,7 +35,7 @@ export class UsersDataSourceService extends DataSource<string> {
 
     deleteUser(email: string) {
         let body = this._emailToJson(email);
-        return this._httpClient.delete<string>(`${this._url}/delete-user/`, body)
+        return this._httpClient.get<string>(`${this._url}/delete-user/`, body)
             .pipe(
                 catchError(this.handleError)
             );

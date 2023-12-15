@@ -1,32 +1,20 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteProgramComponent} from "../delete-program/delete-program.component";
-import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {Program} from "../../model/program";
 import {ProgramsDataSourceService} from "../../services/programs-data-source.service";
 import {HttpClient} from "@angular/common/http";
 import {Observer} from "rxjs";
 import {AnswerComponent} from "../answer/answer.component";
-import {ErrorComponent} from "../error/error.component";
 
 
-// const ELEMENT_DATA: Program[] = [
-//     {year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     {year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     { year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     {number: 4, year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     {number: 5, year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     {number: 6, year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     {number: 7, year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"},
-//     {number: 8, year: '2020/2021', fieldOfStudy: "Informatyka stosowana", degree: "I stopien"}
-// ];
 @Component({
   selector: 'app-programs',
   templateUrl: './programs.component.html',
   styleUrls: ['./programs.component.css']
 })
-export class ProgramsComponent implements AfterViewInit {
+export class ProgramsComponent implements OnInit {
     displayedColumns: string[] = ['number', 'year', 'fieldOfStudy', 'degree', 'specialization', 'remove'];
     dataSource = new ProgramsDataSourceService(this._httpClient);
     data: Program[] = [];
@@ -38,7 +26,7 @@ export class ProgramsComponent implements AfterViewInit {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    ngAfterViewInit() {
+    ngOnInit() {
         this.isLoadingResults = true;
         this.dataSource.getAllPrograms().subscribe(data => {
             this.isLoadingResults = false;
@@ -74,21 +62,31 @@ export class ProgramsComponent implements AfterViewInit {
                         this.data.splice(index, 1);
                         this.dataLength = this.data.length;
                         this.dataSource.setData(this.data);
-                        this.dialog.open(AnswerComponent);
+                        this.dialog.open(AnswerComponent, {
+                            data: {
+                                message: data.message,
+                                answer: true
+                            }
+                        });
                     },
                     error: (error) => {
                         this.isLoadingResults = false;
-                        this.dialog.open(ErrorComponent);
+                        this.dialog.open(AnswerComponent, {
+                            data: {
+                                message: error.message,
+                                answer: false
+                            }
+                        });
                     },
                     complete: () => {}
                 };
 
                 this.isLoadingResults = true;
                 this.dataSource.deleteProgram(
-                    this.data[index].degree,
-                    this.data[index].fieldOfStudy,
-                    this.data[index].year,
-                    this.data[index].specialization
+                    this.data[index].level,
+                    this.data[index].name.split(" ").join("_"),
+                    this.data[index].startingYear,
+                    this.data[index].specialization.split(" ").join("_")
                 ).subscribe(observer)
 
             }
